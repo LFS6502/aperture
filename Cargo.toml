@@ -2,6 +2,9 @@
 resolver = "3"
 members = ["aperture-movegen"]
 
+[workspace.lints.rust]
+unsafe_op_in_unsafe_fn = "forbid"
+
 [workspace.lints.clippy]
 cognitive_complexity = "warn"
 ref_option = "warn"
@@ -20,3 +23,7 @@ cast_possible_truncation = "warn"
 cast_sign_loss = "warn"
 unwrap_used = "warn"
 expect_used = "warn"
+char_lit_as_u8 = "warn"
+fallible_impl_from = "warn"
+explicit_into_iter_loop = "warn"
+filter_map_next = "warn"
