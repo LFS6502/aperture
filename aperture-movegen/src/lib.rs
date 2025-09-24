@@ -1,7 +1,7 @@
 #![allow(unused)]
 
 use colored::Colorize;
-use std::{fmt::Debug, path::Display};
+use std::{fmt::Debug, fmt::Write, path::Display};
 mod fen;
 
 pub struct Move {
@@ -49,11 +49,12 @@ impl BitBoard {
 
 impl Debug for BitBoard {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        writeln!(f);
         for square in 0..64_u32 {
-            let colored_text = if self.square(square) { " X " } else { "   " }.red();
+            let colored_text = if self.square(square) { " @ " } else { "   " }
+                .truecolor(0, 255, 255)
+                .bold();
             let full_text = if (square + square / 8).rem_euclid(2) == 0 {
-                colored_text.on_white()
+                colored_text.on_truecolor(170, 170, 170)
             } else {
                 colored_text.on_truecolor(70, 70, 70)
             };
@@ -78,7 +79,7 @@ impl From<u64> for BitBoard {
     }
 }
 
-#[derive(Clone, Copy, Debug, PartialEq)]
+#[derive(Clone, Copy, PartialEq)]
 pub struct BitBoardSet {
     pawns: BitBoard,
     knights: BitBoard,
@@ -88,6 +89,30 @@ pub struct BitBoardSet {
     kings: BitBoard,
     white: BitBoard,
     black: BitBoard,
+}
+
+fn display_two_bitboards(left_name: &str, left: BitBoard, right_name: &str, right: BitBoard) {
+    let mut buffer = String::new();
+
+    writeln!(buffer, "{left_name:<24}      {right_name}");
+    let left_display = format!("{:?}", left);
+    let right_display = format!("{:?}", right);
+
+    for (left_line, right_line) in left_display.lines().zip(right_display.lines()) {
+        writeln!(buffer, "{0}      {1}", left_line, right_line);
+    }
+
+    println!("{}", buffer);
+}
+
+impl Debug for BitBoardSet {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        display_two_bitboards("pawns", self.pawns, "knights", self.knights);
+        display_two_bitboards("bishops", self.bishops, "rooks", self.rooks);
+        display_two_bitboards("queens", self.queens, "kings", self.kings);
+        display_two_bitboards("white", self.white, "black", self.black);
+        Ok(())
+    }
 }
 
 #[derive(Clone, Copy, Debug, PartialEq)]
