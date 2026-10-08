@@ -11,7 +11,7 @@ impl Board {
             return Err("Missing position field in FEN string".to_owned());
         };
 
-        let mut square_index = 0_u32;
+        let mut square_index = 56_u32; // TODO Replace this with an enum
         for char in position.chars() {
             match char {
                 '/' => {
