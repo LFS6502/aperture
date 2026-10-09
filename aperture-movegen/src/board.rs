@@ -22,6 +22,7 @@ pub struct Board {
     pub(crate) inner: ZobristBoard,
     pub(crate) halfmove_clock: u8,
     pub(crate) fullmove_number: u16,
+    pub(crate) history: Vec<u64>, // Zobrist hashes
 }
 
 impl Board {
@@ -50,6 +51,7 @@ impl Board {
             },
             fullmove_number: 1,
             halfmove_clock: 0,
+            history: Vec::new(),
         }
     }
 

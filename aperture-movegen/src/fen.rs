@@ -246,6 +246,7 @@ mod fen_test {
             },
             fullmove_number: 1,
             halfmove_clock: 0,
+            history: Vec::new(),
         };
 
         assert_eq!(Board::from_fen(starting_fen).unwrap(), starting_board);
