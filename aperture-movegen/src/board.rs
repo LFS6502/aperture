@@ -21,7 +21,7 @@ pub struct ZobristBoard {
 pub struct Board {
     pub(crate) inner: ZobristBoard,
     pub(crate) halfmove_clock: u8,
-    pub(crate) fullmoves_clock: u16,
+    pub(crate) fullmove_number: u16,
 }
 
 impl Board {
@@ -48,7 +48,7 @@ impl Board {
                 en_passant: None,
                 zobrist_hash: 0,
             },
-            fullmoves_clock: 1,
+            fullmove_number: 1,
             halfmove_clock: 0,
         }
     }

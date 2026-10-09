@@ -104,6 +104,40 @@ impl super::Board {
             return Err("Missing FEN field: en passant".to_owned());
         };
 
+        board.inner.en_passant = match en_passant {
+            "-" => None,
+            _ => {
+                let Ok(square) = en_passant.parse() else {
+                    return Err("Invalid en-passant square".to_owned());
+                };
+                Some(square)
+            }
+        };
+
+        // ===== HALFMOVE CLOCK ====
+
+        let Some(halfmove_clock) = words.next() else {
+            return Err("Missing FEN field: halfmove clock".to_owned());
+        };
+
+        let Ok(halfmove_clock) = halfmove_clock.parse::<u8>() else {
+            return Err("Invalid halfmove clock".to_owned());
+        };
+
+        board.halfmove_clock = halfmove_clock;
+
+        // ===== FULLMOVE NUMBER ====
+
+        let Some(fullmove_number) = words.next() else {
+            return Err("Missing FEN field: halfmove clock".to_owned());
+        };
+
+        let Ok(fullmove_number) = fullmove_number.parse::<u16>() else {
+            return Err("Invalid fullmove number".to_owned());
+        };
+
+        board.fullmove_number = fullmove_number;
+
         Ok(board)
     }
 }
@@ -208,9 +242,9 @@ mod fen_test {
                     black_queenside: true,
                 },
                 en_passant: None,
-                zobrist_hash: 1,
+                zobrist_hash: 0,
             },
-            fullmoves_clock: 1,
+            fullmove_number: 1,
             halfmove_clock: 0,
         };
 
