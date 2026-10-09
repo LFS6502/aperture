@@ -1,4 +1,4 @@
-use super::*;
+use crate::*;
 #[test]
 fn from_numbers_limit() {
     for i in 0..=255_u8 {

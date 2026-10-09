@@ -14,10 +14,7 @@ mod board;
 pub use board::*;
 
 #[cfg(test)]
-mod square_tests;
-
-#[cfg(test)]
-mod bitboard_tests;
+mod tests;
 
 pub struct Move {
     from: Square,

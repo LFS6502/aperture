@@ -1,4 +1,4 @@
-use super::*;
+use crate::*;
 
 #[test]
 fn from_bytes_white_squares() {
